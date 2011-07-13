@@ -11,7 +11,7 @@
         if ((localStorage['isScrollBlocked'+tabId]==true) || (localStorage['isScrollBlocked'+tabId]=="true")) {
             chrome.browserAction.setTitle({title: "Scroll Blocked!", tabId: tabId});
             chrome.browserAction.setBadgeText({text: '', tabId: sender.tab.id})
-            chrome.browserAction.setBadgeBackgroundColor({color: [0,0,0], tabId: sender.tab.id})
+            chrome.browserAction.setBadgeBackgroundColor({color: [0,0,0,0], tabId: sender.tab.id})
             localStorage['isScrollBlocked'+tabId]=false;
         }
     });
@@ -37,12 +37,12 @@
             if ((request.sb_status == false) || (request.sb_status == "false")) {
                 chrome.browserAction.setTitle({title: "ScrollBlocker", tabId: sender.tab.id});
                 chrome.browserAction.setBadgeText({text: '', tabId: sender.tab.id})
-                chrome.browserAction.setBadgeBackgroundColor({color: [0,0,0], tabId: sender.tab.id})
+                chrome.browserAction.setBadgeBackgroundColor({color: [0,0,0,0], tabId: sender.tab.id})
             }
             else {
                 chrome.browserAction.setTitle({title: "ScrollBlocker", tabId: sender.tab.id});
                 chrome.browserAction.setBadgeText({text: 'ON', tabId: sender.tab.id})
-                chrome.browserAction.setBadgeBackgroundColor({color: [255,0,0], tabId: sender.tab.id})
+                chrome.browserAction.setBadgeBackgroundColor({color: [255,0,0,255], tabId: sender.tab.id})
             }
         }
     );
