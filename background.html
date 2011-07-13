@@ -10,8 +10,8 @@
     chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab) {
         if ((localStorage['isScrollBlocked'+tabId]==true) || (localStorage['isScrollBlocked'+tabId]=="true")) {
             chrome.browserAction.setTitle({title: "Scroll Blocked!", tabId: tabId});
-            chrome.browserAction.setBadgeText({text: '', tabId: sender.tab.id})
-            chrome.browserAction.setBadgeBackgroundColor({color: [0,0,0,0], tabId: sender.tab.id})
+            chrome.browserAction.setBadgeText({text: '', tabId: tabId})
+            chrome.browserAction.setBadgeBackgroundColor({color: [0,0,0,0], tabId: tabId})
             localStorage['isScrollBlocked'+tabId]=false;
         }
     });
