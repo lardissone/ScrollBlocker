@@ -1,0 +1,51 @@
+<html>
+<head>
+<script>
+    chrome.tabs.onCreated.addListener(function(tab) {
+        chrome.windows.getCurrent(function(window) {
+            localStorage['isScrollBlocked'+tab.id]=false;
+        });
+    });
+
+    chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab) {
+        if ((localStorage['isScrollBlocked'+tabId]==true) || (localStorage['isScrollBlocked'+tabId]=="true")) {
+            chrome.browserAction.setTitle({title: "Scroll Blocked!", tabId: tabId});
+            chrome.browserAction.setBadgeText({text: '', tabId: sender.tab.id})
+            chrome.browserAction.setBadgeBackgroundColor({color: [0,0,0], tabId: sender.tab.id})
+            localStorage['isScrollBlocked'+tabId]=false;
+        }
+    });
+    
+    chrome.browserAction.onClicked.addListener(function(tab) {
+        if ((localStorage['isScrollBlocked'+tab.id]===undefined) || (localStorage['isScrollBlocked'+tab.id]===null))
+            localStorage['isScrollBlocked'+tab.id]=false;
+        
+        if ((localStorage['isScrollBlocked'+tab.id]==true) || (localStorage['isScrollBlocked'+tab.id]=="true"))
+            localStorage['isScrollBlocked'+tab.id]=false;
+        else
+            localStorage['isScrollBlocked'+tab.id]=true;
+        
+        chrome.tabs.getSelected(null, function(tab) {
+            chrome.tabs.sendRequest(tab.id, {flag: localStorage['isScrollBlocked'+tab.id]}, function(response) {
+
+            });
+        });
+    });
+    
+    chrome.extension.onRequest.addListener(
+        function(request, sender, sendResponse) {
+            if ((request.sb_status == false) || (request.sb_status == "false")) {
+                chrome.browserAction.setTitle({title: "ScrollBlocker", tabId: sender.tab.id});
+                chrome.browserAction.setBadgeText({text: '', tabId: sender.tab.id})
+                chrome.browserAction.setBadgeBackgroundColor({color: [0,0,0], tabId: sender.tab.id})
+            }
+            else {
+                chrome.browserAction.setTitle({title: "ScrollBlocker", tabId: sender.tab.id});
+                chrome.browserAction.setBadgeText({text: 'ON', tabId: sender.tab.id})
+                chrome.browserAction.setBadgeBackgroundColor({color: [255,0,0], tabId: sender.tab.id})
+            }
+        }
+    );
+</script>
+</head>
+</html>
